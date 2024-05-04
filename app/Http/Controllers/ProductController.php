@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ApiResponse;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
+        $subcategory =Product::with('category','brand','sub_category')->get();
+        return $this->sendResponse($subcategory, 'All Employee See Easily!');
     }
 
     /**
