@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -32,6 +33,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'name' => 'required'
+            
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        // $data = $request->all();
+        $input = $request->all();
+        $subcategory =Product::create($input);
+        return $this->sendResponse($subcategory, 'Subcategory Data Created Successfully');
     }
 
     /**

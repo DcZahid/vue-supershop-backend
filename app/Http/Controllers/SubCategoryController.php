@@ -15,7 +15,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         //
-        $subcategory =Sub_category::get();
+        $subcategory =Sub_category::with('category')->get();
         return $this->sendResponse($subcategory, 'All Employee See Easily!');
     }
 
