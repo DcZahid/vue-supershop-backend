@@ -33,6 +33,19 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        // $data = $request->all();
+        $input = $request->all();
+        $category = Category::create($input);
+        return $this->sendResponse($category, 'Expense Data Created Successfully');
     }
 
     /**
@@ -46,24 +59,41 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(string $id)
     {
         //
+        $category = Category::findorFail($id);
+        return $this->sendResponse($category, 'Category Data Fetched Successfully');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, string $id)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        $category = Category::findorFail($id);
+        $category->update([
+            'name' => $request->name
+        ]);
+        return $this->sendResponse($category , 'Category Data Updated Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(string $id)
     {
         //
+        $category = Category::findorFail($id)->delete();
+        return $this->sendResponse($category , 'Category Data Deleted Permanently!');
     }
 }
