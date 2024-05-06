@@ -53,32 +53,55 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(string $id)
     {
-        //
+        
+        $subcategory = Product::findorFail($id);
+        return $this->sendResponse($subcategory, 'Category Data Fetched Successfully');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(string $id)
     {
-        //
+        
+        $subcategory = Product::findorFail($id);
+        return $this->sendResponse($subcategory, 'Category Data Fetched Successfully');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, string $id)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        $subcategory = Product::findorFail($id);
+        $subcategory->update([
+            'category_id' => $request->category_id,
+            'sub_category_id' => $request->sub_category_id,
+            'brand_id' => $request->brand_id,
+            'name' => $request->name
+        ]);
+        return $this->sendResponse($subcategory , 'SubCategory Data Updated Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(string $id)
     {
         //
+        $subCategory = Product::findorFail($id)->delete();
+        return $this->sendResponse($subCategory , 'SubCategory Data Deleted Permanently!');
     }
 }

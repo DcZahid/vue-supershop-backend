@@ -10,6 +10,6 @@ class Expense extends Model
     use HasFactory;
     protected $guarded = ['id'];
     public function expense_category(){
-        return $this->belongsTo(ExpenseCategory::class);
+        return $this->belongsTo(Expense_category::class);
     }
 }
