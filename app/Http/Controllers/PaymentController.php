@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Unit;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UnitController extends Controller
+class PaymentController extends Controller
 {
     use ApiResponse;
     /**
@@ -15,8 +15,8 @@ class UnitController extends Controller
     public function index()
     {
         //
-        $unit =Unit::all();
-        return $this->sendResponse($unit, 'All Unit See Easily!');
+        $payment =Payment::all();
+        return $this->sendResponse($payment, 'All Payment See Easily!');
     }
 
     /**
@@ -34,7 +34,7 @@ class UnitController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'method' => 'required',
             
         ]);
 
@@ -44,14 +44,13 @@ class UnitController extends Controller
 
         // $data = $request->all();
         $input = $request->all();
-        $unit = Unit::create($input);
-        return $this->sendResponse($unit, 'Unit Created Successfully');
+        $payment = Payment::create($input);
+        return $this->sendResponse($payment, 'Expense Data Created Successfully');
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(Unit $unit)
+    public function show(Payment $payment)
     {
         //
     }
@@ -62,10 +61,9 @@ class UnitController extends Controller
     public function edit(string $id)
     {
         //
-        $unit = Unit::findorFail($id);
-        return $this->sendResponse($unit, 'Unit Data Fetched Successfully');
+        $payment = Payment::findorFail($id);
+        return $this->sendResponse($payment, 'Payment Data Fetched Successfully');
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -73,18 +71,18 @@ class UnitController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'method' => 'required'
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
-        $unit = Unit::findorFail($id);
-        $unit->update([
-            'name' => $request->name
+        $payment = Payment::findorFail($id);
+        $payment->update([
+            'method' => $request->method
         ]);
-        return $this->sendResponse($unit , 'Unit Data Updated Successfully!');
+        return $this->sendResponse($payment , 'Payment Data Updated Successfully!');
     }
 
     /**
@@ -93,7 +91,7 @@ class UnitController extends Controller
     public function destroy(string $id)
     {
         //
-        $unit = Unit::findorFail($id)->delete();
-        return $this->sendResponse($unit , 'Unit Data Deleted Permanently!');
+        $payment = Payment::findorFail($id)->delete();
+        return $this->sendResponse($payment , 'Payment Data Deleted Permanently!');
     }
 }

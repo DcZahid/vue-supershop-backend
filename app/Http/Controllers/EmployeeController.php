@@ -60,9 +60,11 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(employee $employee)
+    public function show(string $id)
     {
         //
+        $employee = Employee::with('teamable')->findorFail($id);
+        return $this->sendResponse($employee, 'Employee Data Fetched Successfully');
     }
 
     /**
@@ -71,7 +73,7 @@ class EmployeeController extends Controller
     public function edit(string $id)
     {
         //
-        $employee = Employee::findorFail($id);
+        $employee = Employee::with('teamable')->findorFail($id);
         return $this->sendResponse($employee, 'Employee Data Fetched Successfully');
     }
 
@@ -80,7 +82,6 @@ class EmployeeController extends Controller
      */
     public function update(Request $request,  string $id)
     {
-        //
         $validator = Validator::make($request->all(), [
             'position' => 'required',
             'joining_date' => 'required',
@@ -93,16 +94,18 @@ class EmployeeController extends Controller
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
-
-        $employee = Employee::findorFail($id);
-        $employee->update([
-            'position' => $request->position,
-            'joining_date' => $request->joining_date,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address
-        ]);
+        //$input=$request->all();
+        $input['position']=$request->position;
+        $input['joining_date']=$request->joining_date;
+        $inputTeam['name']=$request->name;
+        $inputTeam['phone']=$request->phone;
+        $inputTeam['email']=$request->email;
+        $inputTeam['address']=$request->address;
+        $employee = Employee :: findorFail($id)->update($input);
+        $e= Employee :: findorFail($id);
+        if($inputTeam){
+        $e->teamable->update($inputTeam);
+        }
         return $this->sendResponse($employee , 'Employee Data Updated Successfully!');
     }
 
@@ -112,7 +115,17 @@ class EmployeeController extends Controller
     public function destroy(string $id)
     {
         //
-        $employee = Employee::findorFail($id)->delete();
+       // Find the employee by ID
+       $employee = Employee::findOrFail($id);
+        
+       // Delete the employee
+       $employee->delete();
+       
+       // Find the related person
+       $teamable = $employee->teamable;
+       
+       // Delete the related teamable
+       $teamable->delete();
         return $this->sendResponse($employee , 'Employee Data Deleted Permanently!');
     }
 }
