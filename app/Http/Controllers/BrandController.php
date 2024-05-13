@@ -51,9 +51,11 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Brand $brand)
+    public function show(string $id)
     {
         //
+        $brand =Brand::with('teamable')->find($id);
+        return $this->sendResponse($brand, 'All Employee See Easily!');
     }
 
     /**
@@ -61,7 +63,7 @@ class BrandController extends Controller
      */
     public function edit(string $id)
     {
-        $brand =Brand::find($id);
+        $brand =Brand::with('teamable')->find($id);
         return $this->sendResponse($brand, 'All Employee See Easily!');
     }
 

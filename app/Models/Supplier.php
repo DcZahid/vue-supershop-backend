@@ -14,4 +14,8 @@ class Supplier extends Model
     {
         return $this->morphOne(People::class, 'teamable');
     }
+    public function purchase()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

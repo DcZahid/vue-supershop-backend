@@ -59,9 +59,11 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
+    public function show(string $id)
     {
         //
+        $customer = Customer::with('teamable')->findorFail($id);
+        return $this->sendResponse($customer, 'Customer Data Fetched Successfully');
     }
 
     /**
@@ -84,33 +86,58 @@ class CustomerController extends Controller
             'customer_type' => 'required',
             'name' => 'required',
             'phone' => 'required',
-            'email' => 'required | email',
+            'email' => 'required',
             'address' => 'required'
         ]);
 
         if ($validator->fails()) {
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
+        //$input=$request->all();
+        $input['customer_type']=$request->customer_type;
+        $inputTeam['name']=$request->name;
+        $inputTeam['phone']=$request->phone;
+        $inputTeam['email']=$request->email;
+        $inputTeam['address']=$request->address;
+        $employee = Customer :: findorFail($id)->update($input);
+        $e= Customer :: findorFail($id);
+        if($inputTeam){
+        $e->teamable->update($inputTeam);
+        }
+        return $this->sendResponse($employee , 'Employee Data Updated Successfully!');
+
+
+        // $validator = Validator::make($request->all(), [
+        //     'customer_type' => 'required',
+        //     'name' => 'required',
+        //     'phone' => 'required',
+        //     'email' => 'required | email',
+        //     'address' => 'required'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors(), 422);
+        // }
         
-        $customer = Customer::findorFail($id);
-        $customer->update(['customer_type' => $request->customer_type]);
+        // $customer = Customer::findorFail($id);
+        // $customer->update(['customer_type' => $request->customer_type]);
 
-        $pid = $request->pid;
-        $people = People::findorFail($pid);
+        // $pid = $request->pid;
+        // $people = People::findorFail($pid);
 
-        $people->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'address' => $request->address
-        ]);
+        // $people->update([
+        //     'name' => $request->name,
+        //     'phone' => $request->phone,
+        //     'email' => $request->email,
+        //     'address' => $request->address
+        // ]);
 
-        $data = [
-            'customer' => $customer,
-            'people' => $people
-        ];
+        // $data = [
+        //     'customer' => $customer,
+        //     'people' => $people
+        // ];
 
-        return $this->sendResponse($data , 'Customer Data Updated Successfully!');
+        // return $this->sendResponse($data , 'Customer Data Updated Successfully!');
     }
 
     /**

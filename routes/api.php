@@ -5,12 +5,14 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SubCategoryController;
 
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
 
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UnitController;
 
 
@@ -23,15 +25,16 @@ Route::get('/user', function (Request $request) {
 
 
 Route::prefix('zahid')->group(function () {
-    Route::resource('customer', CustomerController::class)->names('cust');
-    Route::resource('employee', EmployeeController::class)->names('emp');
+    Route::resource('customer', CustomerController::class)->names('customer');
+    Route::resource('employee', EmployeeController::class)->names('employee');
     Route::resource('brand', BrandController::class)->names('brand');
     Route::resource('category', CategoryController::class)->names('category');
     Route::resource('sub_category', SubCategoryController::class)->names('sub_category');
     Route::resource('product', ProductController::class)->names('product');
+    Route::resource('purchase', PurchaseController::class)->names('purchase');
 });
 Route::prefix('minhaj')->group(function () {
-    // Route::resource('supplier',supp::class)->names('suppl');
+    Route::resource('supplier',SupplierController::class)->names('supplier');
     Route::resource('expensecategory', ExpenseCategoryController::class)->names('expcat');
     Route::resource('expense', ExpenseController::class)->names('expense');
 });

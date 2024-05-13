@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
 {
+    use ApiResponse;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
+        $purchase= Purchase::with('supplier','category','sub_category','brand','product','payment','unit')->get();
+        return $this->sendResponse($purchase,'All purchase Data See Easily');
     }
 
     /**

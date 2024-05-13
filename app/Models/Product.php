@@ -18,4 +18,8 @@ class Product extends Model
     public function brand() {
         return $this->belongsTo(Brand::class);
     }
+    public function purchase() {
+        return $this->hasMany(Purchase::class);
+        // ekta purchase a onk gula product thakte pare abar ekta product er onk gula purchase hotee pare
+    }
 }
