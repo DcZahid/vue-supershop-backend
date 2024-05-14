@@ -11,24 +11,24 @@ class Purchase extends Model
     protected $guarded=['id'];
     public function payment()
     {
-        return $this->hasMany(Payment::class);
+        return $this->belongsTo(Payment::class);
     }
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
     }
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
-    public function sub_category()
-    {
-        return $this->belongsTo(Sub_category::class);
-    }
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Category::class);
+    // }
+    // public function sub_category()
+    // {
+    //     return $this->belongsTo(Sub_category::class);
+    // }
+    // public function brand()
+    // {
+    //     return $this->belongsTo(Brand::class);
+    // }
     public function product()
     {
         return $this->belongsTo(Product::class);

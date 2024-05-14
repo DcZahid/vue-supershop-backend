@@ -9,8 +9,8 @@ class Payment extends Model
 {
     use HasFactory;
     protected $guarded=['id'];
-    public function purchase()
+    public function Purchase()
     {
-        return $this->belongsTo(Purchase::class);
+        return $this->hasMany(Purchase::class);
     }
 }

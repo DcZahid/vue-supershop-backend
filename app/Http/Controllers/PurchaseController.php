@@ -4,34 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Purchase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PurchaseController extends Controller
 {
     use ApiResponse;
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
-        $purchase= Purchase::with('supplier','category','sub_category','brand','product','payment','unit')->get();
+        $purchase= Purchase::with('payment','supplier.teamable','product.category','product.sub_category','product.brand','unit')->get();
         return $this->sendResponse($purchase,'All purchase Data See Easily');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
+        $validator = validator::make($request->all(), [
+          
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors(), 422);
+        }
+
+        // $data = $request->all();
+        $input=$request->all();
+        $purchase=Purchase::create($input);
+        return $this->sendResponse($purchase, 'purchase Data Created Successfully');
     }
 
     /**
