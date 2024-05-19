@@ -17,18 +17,18 @@ class Purchase extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
-    // public function category()
-    // {
-    //     return $this->belongsTo(Category::class);
-    // }
-    // public function sub_category()
-    // {
-    //     return $this->belongsTo(Sub_category::class);
-    // }
-    // public function brand()
-    // {
-    //     return $this->belongsTo(Brand::class);
-    // }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function sub_category()
+    {
+        return $this->belongsTo(Sub_category::class);
+    }
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

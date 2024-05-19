@@ -22,4 +22,7 @@ class Product extends Model
         return $this->hasMany(Purchase::class);
         // ekta purchase a onk gula product thakte pare abar ekta product er onk gula purchase hotee pare
     }
+    public function sale() {
+        return $this->hasMany(Sale::class);
+    }
 }

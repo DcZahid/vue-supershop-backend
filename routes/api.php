@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SubCategoryController;
 
 use App\Http\Controllers\ExpenseCategoryController;
@@ -41,4 +42,5 @@ Route::prefix('minhaj')->group(function () {
 Route::prefix('rubon')->group(function () {
     Route::resource('unit', UnitController::class)->names('unit');
     Route::resource('payment', PaymentController::class)->names('payment');
+    Route::resource('sale', SaleController::class)->names('sale');
 });

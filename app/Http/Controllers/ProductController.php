@@ -78,6 +78,8 @@ class ProductController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'category_id' => 'required',
+            'sub_category_id' => 'required',
+            'brand_id' => 'required',
             'name' => 'required'
         ]);
 
@@ -85,14 +87,14 @@ class ProductController extends Controller
             return $this->sendError('Validation Error.', $validator->errors(), 422);
         }
 
-        $subcategory = Product::findorFail($id);
-        $subcategory->update([
+        $product = Product::findorFail($id);
+        $product->update([
             'category_id' => $request->category_id,
             'sub_category_id' => $request->sub_category_id,
             'brand_id' => $request->brand_id,
             'name' => $request->name
         ]);
-        return $this->sendResponse($subcategory , 'SubCategory Data Updated Successfully!');
+        return $this->sendResponse($product , 'product Data Updated Successfully!');
     }
 
     /**

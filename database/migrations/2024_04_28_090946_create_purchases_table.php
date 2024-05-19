@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('subCategory_id');
+            $table->unsignedBigInteger('sub_category_id');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('unit_id');

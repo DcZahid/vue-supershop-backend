@@ -16,4 +16,7 @@ class Brand extends Model
     public function purchase() {
         return $this->hasMany(Brand::class);
     }
+    public function sale() {
+        return $this->hasMany(Sale::class);
+    }
 }

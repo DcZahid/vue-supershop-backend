@@ -14,4 +14,7 @@ class Customer extends Model
     {
         return $this->morphOne(People::class, 'teamable');
     }
+    public function sale() {
+        return $this->hasMany(Sale::class);
+    }
 }
