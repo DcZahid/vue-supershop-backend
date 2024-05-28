@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_id');
+            $table->unsignedBigInteger('purchase_id')->nullable();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('sub_category_id');

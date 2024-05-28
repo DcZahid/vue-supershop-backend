@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         //
-        $subcategory =Product::with('category','brand','sub_category')->get();
+        $subcategory =Product::with('category','brand','sub_category','sale','purchase')->get();
         return $this->sendResponse($subcategory, 'All Employee See Easily!');
     }
 
@@ -33,21 +33,34 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
-        $validator = Validator::make($request->all(), [
-            'category_id' => 'required',
-            'sub_category_id' => 'required',
-            'name' => 'required'
+        // $validator = Validator::make($request->all(), [
+        //     'category_id' => 'required',
+        //     'sub_category_id' => 'required',
+        //     'name' => 'required'
             
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return $this->sendError('Validation Error.', $validator->errors(), 422);
+        // }
+
+        // // $data = $request->all();
+        // $input = $request->all();
+        // $subcategory =Product::create($input);
+        // return $this->sendResponse($subcategory, 'Subcategory Data Created Successfully');
+
+        $products = $request->input('products', []);
+
+    foreach ($products as $productData) {
+        Product::create([
+            'name' => $productData['name'],
+            'category_id' => $productData['category_id'],
+            'sub_category_id' => $productData['sub_category_id'],
+            'brand_id' => $productData['brand_id']
         ]);
+    }
 
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors(), 422);
-        }
-
-        // $data = $request->all();
-        $input = $request->all();
-        $subcategory =Product::create($input);
-        return $this->sendResponse($subcategory, 'Subcategory Data Created Successfully');
+    return response()->json(['message' => 'Products created successfully'], 201);
     }
 
     /**

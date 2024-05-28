@@ -31,7 +31,6 @@ class PurchaseController extends Controller
             'product_id' => 'required',
             'unit_id' => 'required',
             'price' => 'required',
-            'sale_price' => 'required',
             'quantity' => 'required',
             'payment_id' => 'required',
             'date' => 'required'
@@ -78,7 +77,6 @@ class PurchaseController extends Controller
             'product_id' => 'required',
             'unit_id' => 'required',
             'price' => 'required',
-            'sale_price' => 'required',
             'quantity' => 'required',
             'payment_id' => 'required',
             'date' => 'required',

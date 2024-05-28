@@ -15,7 +15,7 @@ class SaleController extends Controller
     public function index()
     {
         //
-        $sale= Sale::with('category','sub_category','brand','product','payment','customer.teamable','unit')->get();
+        $sale= Sale::with('category','sub_category','brand','product','payment','customer.teamable','unit','purchase')->get();
         return $this->sendResponse($sale,'All sale Data See Easily');
     }
 

@@ -13,10 +13,10 @@ class Sale extends Model
     {
         return $this->belongsTo(Customer::class);
     }
-    // public function purchase()
-    // {
-    //     return $this->hasMany(Purchase::class);
-    // }
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class);
+    }
     public function product()
     {
         return $this->belongsTo(Product::class);

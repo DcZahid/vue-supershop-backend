@@ -47,6 +47,19 @@ class SubCategoryController extends Controller
         $input = $request->all();
         $subcategory = Sub_category::create($input);
         return $this->sendResponse($subcategory, 'Subcategory Data Created Successfully');
+        // SubCategoryController.php
+
+
+
+    // $category_id = $request->query('category_id');
+    // if ($category_id) {
+    //     $subCategories = Sub_category::where('category_id', $category_id)->get();
+    // } else {
+    //     $subCategories = Sub_category::all();
+    // }
+    // return response()->json(['data' => $subCategories]);
+
+
     }
 
     /**

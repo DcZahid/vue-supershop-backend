@@ -37,4 +37,8 @@ class Purchase extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+    public function sale()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }
